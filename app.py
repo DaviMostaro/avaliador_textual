@@ -57,8 +57,8 @@ if "classe_original" in st.session_state:
 
     st.subheader("Escolha as mutações")
 
-    usar_sinonimo = st.checkbox("Substituir uma palavra por sinônimo") 
-    usar_antonimo = st.checkbox("Substituir uma palavra por antônimo")
+    usar_sinonimo = st.checkbox("Substituir palavras por sinônimos") 
+    usar_antonimo = st.checkbox("Substituir palavras por antônimos")
     usar_genero = st.checkbox("Alterar gênero gramatical")
     usar_parafrase = st.checkbox("Parafrasear texto")
 

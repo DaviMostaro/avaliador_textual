@@ -1,7 +1,7 @@
 from pathlib import Path
 import joblib
 
-CAMINHO_MODELO = Path("modelos/modelo_caed.joblib")
+CAMINHO_MODELO = Path("modelos/modelo_caed_svm.joblib")
 
 def salvar_modelo(modelo):
     CAMINHO_MODELO.parent.mkdir(parents=True, exist_ok=True)

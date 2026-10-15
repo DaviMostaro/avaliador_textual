@@ -15,7 +15,7 @@ def carregar_arquivos(caminho_dataset):
     for nome_pasta, nome_classe in classes.items():
         pasta = caminho_dataset / nome_pasta
 
-        for arquivo in pasta.rglob("*.txt"):
+        for arquivo in sorted(pasta.rglob("*.txt")):
             texto = arquivo.read_text(encoding="utf-8")
 
             exemplo = {

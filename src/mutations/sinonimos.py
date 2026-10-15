@@ -10,23 +10,31 @@ def substituir_palavra(texto, tipo="sinonimo"):
         )
 
     instrucao = f"""
-        Você é um assistente especializado em língua portuguesa.
-
         Receba o texto abaixo e realize uma mutação do tipo: {tipo}.
 
         Regras:
-        - Substitua apenas UMA palavra por um {tipo}.
-        - Escolha uma palavra que possa ser substituída sem tornar a frase
-        gramaticalmente incorreta.
-        - Considere o contexto para escolher uma substituição adequada.
-        - Preserve o restante do texto, inclusive a pontuação.
-        - Se não houver uma substituição adequada, retorne o texto original.
+        - Substitua palavras por {tipo} em várias frases do texto,
+        sempre que houver substituições adequadas.
+        - Procure substituir, preferencialmente, uma palavra por frase,
+        mas não force alterações quando não houver uma opção adequada.
+        - Escolha palavras cuja substituição seja apropriada ao contexto
+        e mantenha a correção gramatical.
+        - Se o tipo for sinônimo, preserve tanto quanto possível
+        o sentido original das frases.
+        - Se o tipo for antônimo, produza oposições de sentido coerentes
+        com o contexto.
+        - Preserve o restante do texto, inclusive a pontuação e a estrutura,
+        exceto pelas alterações necessárias.
         - Não invente palavras nem acrescente explicações.
-        - Retorne somente um JSON válido com os campos:
+        - Se nenhuma substituição adequada for possível, retorne
+        o texto original.
+        - Retorne somente JSON válido com os campos:
         "texto_modificado", "palavra_original", "palavra_substituta".
 
+        Os campos "palavra_original" e "palavra_substituta" devem ser
+        listas contendo os pares de palavras substituídas, na mesma ordem.
         Se nenhuma substituição for possível, use null nos dois campos
-        de palavra e mantenha o texto original.
+        e mantenha o texto original.
 
         Texto: {json.dumps(texto, ensure_ascii=False)}
     """

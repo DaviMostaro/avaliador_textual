@@ -10,8 +10,11 @@ def alterar_genero(texto):
         Altere o gênero gramatical de uma pessoa ou personagem no texto.
 
         Regras:
-        - Altere o gênero de apenas uma pessoa ou personagem.
-        - Ajuste artigos, substantivos, adjetivos e outras palavras
+        - Escolha uma pessoa ou personagem cujo gênero possa ser alterado
+        adequadamente.
+        - Altere o gênero dessa pessoa ou personagem em todas as partes
+        do texto em que for necessário para manter a consistência.
+        - Ajuste artigos, substantivos, adjetivos, pronomes e outras palavras
         necessárias para manter a concordância gramatical.
         - Preserve o sentido geral da situação descrita.
         - Preserve o restante do texto sempre que possível.

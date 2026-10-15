@@ -1,9 +1,13 @@
 import numpy as np
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import FunctionTransformer
+from sklearn.preprocessing import FunctionTransformer, StandardScaler
 from sklearn.linear_model import LogisticRegression
 from src.features.canonicidade import analisar_texto
+from sklearn.svm import LinearSVC
+from src.features.caracteristicas_linguisticas import (
+    analisar_caracteristicas_linguisticas,
+)
 
 def extrair_caracteristicas_canonicas(textos):
     caracteristicas = []
@@ -15,8 +19,25 @@ def extrair_caracteristicas_canonicas(textos):
         caracteristicas.append([proporcao])
 
     return np.array(caracteristicas)
-    
-def treinar_modelo(exemplos):
+
+def extrair_caracteristicas_linguisticas(textos):
+    caracteristicas = []
+
+    for texto in textos:
+        resultado = analisar_caracteristicas_linguisticas(texto)
+
+        linha = [
+            np.log1p(resultado["total_palavras"]),
+            resultado["comprimento_medio_palavra"],
+            resultado["proporcao_palavras_longas"],
+            resultado["diversidade_lexical"],
+        ]
+
+        caracteristicas.append(linha)
+        
+    return np.array(caracteristicas, dtype=float)
+
+def treinar_modelo(exemplos, tipo="svm"):
     textos = []
     classes = []
 
@@ -41,23 +62,41 @@ def treinar_modelo(exemplos):
                 validate=False
             ),
         ),
+        (
+            "linguisticas",
+            Pipeline([
+                (
+                    "extracao",
+                    FunctionTransformer(
+                        extrair_caracteristicas_linguisticas,
+                        validate=False,
+                    ),
+                ),
+                ("padronização", StandardScaler())
+            ])
+        ),
     ])
+
+    if tipo == "logistica":
+        classificador = LogisticRegression(
+            max_iter=1000,
+            class_weight="balanced",
+            random_state=42,
+        )
+    elif tipo == "svm":
+        classificador = LinearSVC(
+            class_weight="balanced",
+            random_state=42,
+            max_iter=5000,
+        )
+    else:
+        raise ValueError("Tipo deve ser 'logistica' ou 'svm'.")
 
     modelo = Pipeline([
-        (
-            "caracteristicas",
-            extrator_caracteristicas
-        ),
-        (
-            "classificador",
-            LogisticRegression(
-                max_iter=1000,
-                class_weight="balanced",
-                random_state=42,
-            ),
-        ),
+        ("caracteristicas", extrator_caracteristicas),
+        ("classificador", classificador),
     ])
-
+    
     modelo.fit(textos, classes)
 
     return modelo

@@ -7,16 +7,22 @@ def gerar_parafrase(texto):
     instrucao = f"""
         Você é um especialista em língua portuguesa.
 
-        Reescreva o texto fornecido como uma paráfrase.
+        Reescreva o texto fornecido como uma paráfrase completa.
 
         Regras:
+        - Parafraseie o texto inteiro, modificando a estrutura das frases,
+        a ordem das palavras e as construções linguísticas sempre que
+        isso for adequado.
         - Preserve o sentido original do texto.
-        - Modifique a estrutura da frase ou a ordem das palavras.
         - Mantenha as informações, os fatos e as relações entre as ideias.
-        - Não acrescente informações novas.
+        - Não acrescente informações novas nem omita informações relevantes.
+        - Preserve a sequência lógica do texto e a coerência entre as frases.
         - Preserve a língua portuguesa e a correção gramatical.
-        - Se não for possível produzir uma paráfrase adequada,
-        mantenha o texto original.
+        - Mantenha aproximadamente a mesma extensão do texto original.
+        - Não tente aumentar nem reduzir deliberadamente a complexidade
+        linguística do texto.
+        - Se não for possível produzir uma paráfrase adequada, mantenha
+        o texto original.
         - Não acrescente explicações.
         - Retorne somente JSON válido com o campo:
         "texto_modificado".

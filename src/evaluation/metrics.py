@@ -1,3 +1,5 @@
+from collections import Counter
+
 from sklearn.metrics import (
     accuracy_score,
     classification_report,
@@ -21,6 +23,12 @@ def avaliar_modelo(modelo, exemplos):
         classes_reais.append(exemplo["classe"])
 
     classes_previstas = modelo.predict(textos)
+
+    print("\nDistribuição das classes reais:")
+    print(Counter(classes_reais))
+
+    print("\nDistribuição das classes previstas:")
+    print(Counter(classes_previstas))
 
     acuracia = accuracy_score(classes_reais, classes_previstas)
     macro_f1 = f1_score(
