@@ -15,7 +15,7 @@ def analisar_caracteristicas_linguisticas(texto):
     comprimentos = [len(palavra) for palavra in palavras]
 
     palavras_distintas = set(
-        palavra.lower for palavra in palavras
+        palavra.lower() for palavra in palavras
     )
 
     return {

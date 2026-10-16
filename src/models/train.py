@@ -8,6 +8,10 @@ from sklearn.svm import LinearSVC
 from src.features.caracteristicas_linguisticas import (
     analisar_caracteristicas_linguisticas,
 )
+from src.features.caracteristicas_sintaticas import (
+    extrair_caracteristicas_sintaticas,
+)
+from src.features.raridade_lexical import RaridadeLexical
 
 def extrair_caracteristicas_canonicas(textos):
     caracteristicas = []
@@ -74,6 +78,26 @@ def treinar_modelo(exemplos, tipo="svm"):
                 ),
                 ("padronização", StandardScaler())
             ])
+        ),
+        (
+            "sintaticas",
+            Pipeline([
+                (
+                    "extracao",
+                    FunctionTransformer(
+                        extrair_caracteristicas_sintaticas,
+                        validate=False,
+                    ),
+                ),
+                ("padronização", StandardScaler()),
+            ]),
+        ),
+        (
+            "raridade_lexical", 
+            Pipeline([
+                ("extracao", RaridadeLexical()),
+                ("padronização", StandardScaler()),
+            ]),
         ),
     ])
 
